@@ -17,5 +17,9 @@
  * Admin::js('/packages/prettydocs/js/main.js');
  *
  */
+use App\Admin\Extensions\Simplemde;
 
-Encore\Admin\Form::forget(['map', 'editor']);
+
+Encore\Admin\Form::extend('editor', Simplemde::class);
+
+//Encore\Admin\Form::forget(['map']);

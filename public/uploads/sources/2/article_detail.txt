@@ -1,0 +1,29 @@
+##了解PHP-FPM
+
+###cgi
+
+php一开始对过来的请求都是先创建一个进程，读php.ini的配置，初始化环境，返回数据，删除进程，过程繁琐且会影响性能
+###fast-cgi
+
+创建一个主进程，让主进程读取配置，初始化环境，然后fork出多个工作进程，当请求过来由主进程分配给工作进程就可以避免多余的操作
+###php-fpm
+
+由于fast-cgi只是一个cgi程序不能直接管理进程，所以有了php-fpm来进行管理
+
+###<font color=#FF0000>php-fpm的三种模式</font>
+
+>static(静态分配)
+
+>>FPM根据pm.max_children固定工作进程数 在面临持续性的高并发状态下首选
+
+>dynamic(动态分配)
+
+>>FPM根据pm.start_servers ~ pm.max_children之间动态分配工作进程 没有请求进来只会fock设置的开始进程数 常用
+
+>ondemand(按需分配)
+
+>>FPM根据pm.max_children固定工作进程数,根据pm.process_idle_timeout指明空闲时间将进程kill掉，没有请求进来工作进程数为0 访问量低时使用节省资源
+
+><font color=#FF0000>面对高并发性能排序 ondemand < dynamic < static</font>
+
+![思维导图](/uploads/images/fpm.png)

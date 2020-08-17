@@ -12,7 +12,7 @@ class Article extends Model
     }
 
     public function content() {
-        return $this->belongsTo(Content::class,'content_id','id');
+        return $this->hasOne(Content::class);
     }
 
 }

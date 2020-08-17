@@ -2,12 +2,17 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Extensions\Simplemde;
 use App\Models\Article;
+use App\Models\Content;
+use App\Models\Image;
 use App\Models\Tag;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+
+
 
 class ArticleController extends AdminController
 {
@@ -87,16 +92,60 @@ class ArticleController extends AdminController
     {
         $form = new Form(new Article());
 
-        $form->text('title', __('Title'));
-        $form->text('tag_ids', __('Tag ids'));
-        $form->number('image_id', __('Image id'));
-        $form->number('content_id', __('Content id'));
-        $form->text('show_content', __('Show content'));
-        $form->text('author', __('Author'));
-        $form->number('read_num', __('Read num'));
-        $form->number('comment_num', __('Comment num'));
-        $form->switch('is_top', __('Is top'));
+        $form->text('title', __('标题'))->required();
+        $tag = Tag::pluck('name','id');
+        $form->multipleSelect('tag_id','标签')->options($tag)->required();
+        $form->image('image','封面')->required();
+        $form->text('show_content', __('引语'))->required();
+        $form->text('author', __('作者'))->required();
+        $states = [
+            'on' => ['value' => 1,'text' => '置顶','color' => 'success'],
+            'off' => ['value' => 0,'text' => '不置顶','color' =>'danger']
+        ];
+        $form->switch('is_top', __('是否置顶'))->states($states);
+
+        $form->editor('content','正文');
 
         return $form;
+    }
+
+    public function store()
+    {
+        $image = $_FILES['image'];
+        if($image['error'] == 4) {
+            admin_toastr('未上传封面','error');
+            return false;
+        }
+        $file_name =date('Ymd').uniqid();
+        $FILENAME = explode('.', $image['name']);
+        $ext = end($FILENAME);
+        $path = 'images/'.$file_name.'.'.$ext;
+        if($image['error'] == 0){
+            move_uploaded_file($image['tmp_name'],public_path('uploads/').$path);
+            $imageModel = new Image();
+            $imageModel->url = $path;
+            $imageModel->save();
+            $image_id = $imageModel->id;
+        }else{
+            admin_toastr('封面上传失败','error');
+            return false;
+        }
+        $articleModel = new Article();
+        $articleModel->title = $_POST['title'];
+        $articleModel->tag_ids = trim(implode(',',$_POST['tag_id']),',');
+        $articleModel->image_id = $image_id;
+        $articleModel->show_content = $_POST['show_content'];
+        $articleModel->author = $_POST['author'];
+        $articleModel->is_top = $_POST['is_top'] == "off"? 0:1;
+        $articleModel->save();
+        $article_id = $articleModel->id;
+        $path = '/uploads/sources/'.$article_id.'/';
+        if(!is_dir($path)) {
+            mkdir($path,0777,true);
+        }
+        file_put_contents('/uploads/sources/'.$article_id.'/article_detail.txt',$_POST['content']);
+        Content::insert(['article_id' => $article_id,'url' => 'uploads/sources/'.$article_id.'/article_detail.txt']);
+        admin_toastr('编写完成！','success');
+        return true;
     }
 }
