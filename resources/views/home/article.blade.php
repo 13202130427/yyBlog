@@ -12,7 +12,7 @@
     {{$data['read_num']}}
 @stop
 @section('article')
-    @include($data['article'])
+    {!!$data['article'] !!}
 @stop
 @section('tag')
     @foreach($data['tag'] as $tag)

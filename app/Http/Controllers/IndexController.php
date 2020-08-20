@@ -13,7 +13,8 @@ class IndexController extends Controller
     public function index() {
         $show_images = RotationShow::where('is_show','0')->orderBy('sort','DESC')->limit(4)->get();
         foreach ($show_images as $key => $value) {
-            $images[] = $value->image;
+            $images[$key] = $value->image;
+            $images[$key]->url = 'uploads/'.$images[$key]->url;
         }
         $article = Article::where('is_top',0)->orderBy('created_at','DESC')->get()->toArray();
         foreach ($article as $key => $value) {
@@ -23,7 +24,7 @@ class IndexController extends Controller
                 $article[$key]['tag'][] = Tag::find($value1)->name;
             }
             unset($article[$key]['tag_ids']);
-            $article[$key]['image'] = Image::find($value['image_id'])->url;
+            $article[$key]['image'] = 'uploads/'.Image::find($value['image_id'])->url;
             $article[$key]['created_at'] = explode('UTC',date($value['created_at']))[0];
         }
         $right_tag = Tag::limit(10)->pluck('name','id');
