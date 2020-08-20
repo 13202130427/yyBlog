@@ -41,9 +41,7 @@ class ArticleController extends Controller
             $tagdata[] = Tag::find($value)->name;
         }
         $right_article = Article::orderBy('created_at','desc')->limit(10)->pluck('title','id');
-        dd(env("APP_URL"));
         $article_content = file_get_contents(env("APP_URL").'/'.$article->content->url);
-        dd($article_content);
         $article_content = $this->markdown->markdown($article_content);
         $article_content = htmlspecialchars_decode($article_content);
         $data = [
