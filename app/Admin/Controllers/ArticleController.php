@@ -146,6 +146,6 @@ class ArticleController extends AdminController
         file_put_contents('/uploads/sources/'.$article_id.'/article_detail.txt',$_POST['content']);
         Content::insert(['article_id' => $article_id,'url' => 'uploads/sources/'.$article_id.'/article_detail.txt']);
         admin_toastr('编写完成！','success');
-        return true;
+        redirect()->back();
     }
 }
