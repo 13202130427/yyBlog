@@ -141,8 +141,10 @@ class ArticleController extends AdminController
         $article_id = $articleModel->id;
         $path = env('APP_URL').'/uploads/sources/'.$article_id.'/';
         if(!is_dir($path)) {
-            var_dump(mkdir($path,0777,true));
+            $mkdir = mkdir($path,0777,true);
         }
+        var_dump($path);
+        var_dump($mkdir);die;
         file_put_contents(env('APP_URL').'/uploads/sources/'.$article_id.'/article_detail.txt',$_POST['content']);
         Content::insert(['article_id' => $article_id,'url' => 'uploads/sources/'.$article_id.'/article_detail.txt']);
         admin_toastr('编写完成！','success');
