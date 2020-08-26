@@ -11,7 +11,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-
+use Illuminate\Support\Facades\File;
 
 
 class ArticleController extends AdminController
@@ -139,13 +139,10 @@ class ArticleController extends AdminController
         $articleModel->is_top = $_POST['is_top'] == "off"? 0:1;
         $articleModel->save();
         $article_id = $articleModel->id;
-        $path = env('APP_URL').'/uploads/sources/'.$article_id.'/';
-        if(!is_dir($path)) {
-            $mkdir = mkdir($path,0777,true);
-        }
-        var_dump($path);
-        var_dump($mkdir);die;
-        file_put_contents(env('APP_URL').'/uploads/sources/'.$article_id.'/article_detail.txt',$_POST['content']);
+        $path = 'uploads/sources/'.$article_id.'/';
+        $path = public_path($path);
+        File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+        file_put_contents($path.'article_detail.txt',$_POST['content']);
         Content::insert(['article_id' => $article_id,'url' => 'uploads/sources/'.$article_id.'/article_detail.txt']);
         admin_toastr('编写完成！','success');
         redirect()->back();
