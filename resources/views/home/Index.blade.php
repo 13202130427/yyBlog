@@ -158,10 +158,10 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">关注微信公众号</h3>
+                            <h3 class="panel-title">打钱爱你</h3>
                         </div>
                         <div class="panel-body">
-                            <img src="img/qrcode.jpg" style="height: 230.5px;width: 230.5px;" />
+                            <img src="img/getmoney.jpg" style="height: 300.5px;width: 230.5px;" />
                         </div>
                     </div>
 

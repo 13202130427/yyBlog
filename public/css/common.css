@@ -49,7 +49,7 @@ a,a:hover{
 }
 .w_search .w_searchbox{
 	margin-top: 15px;
-	
+
 }
 .w_search .w_searchbox>input{
 	border: none;
@@ -323,7 +323,7 @@ a,a:hover{
 .w_navbar_tip{
 	float: right;
 	color: #999;
-	font-size: 12px; font-weight: normal; 
+	font-size: 12px; font-weight: normal;
 	line-height: 40px; height: 40px;
 }
 
@@ -333,7 +333,7 @@ a,a:hover{
 		height: 200px;
 	}
 	.w_logo{
-	    background: url(../img/logo0.png) no-repeat center;
+	    background: url(../img/log.png) no-repeat center;
         width: 55px;
 	}
 	.w_header_nav>ul>li>a{width: 50px;}

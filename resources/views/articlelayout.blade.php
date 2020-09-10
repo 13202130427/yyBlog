@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
-    <div class="w_container">
+    <div class="w_container" >
         <div class="container">
             <div class="row w_main_row">
 
@@ -10,6 +10,18 @@
                     <li class="active">@yield('title')</li>
                     <span class="w_navbar_tip">我们长路漫漫，只因学无止境。</span>
                 </ol>
+                <div class="money-alert" style="width: 100%;height: 400px;position: fixed;top:10%;left:30%;z-index: 999;" >
+                    <div style="display:block;width: 50%;height: 600px;">
+                        <div style="text-align: center;width:500px;height:500px;background-color: #fff;border-radius: 10px;border: 2px solid #bfbfbf; position: relative;">
+                            <div style="">
+                                <div>logo</div>
+                                <div>感谢你的支持，我会继续努力！</div>
+                                <div>码</div>
+                            </div>
+                            <div style="position: absolute;right:20px;top: 20px;">x</div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-lg-9 col-md-9 w_main_left">
                     <div class="panel panel-default">
@@ -28,41 +40,17 @@
                         </div>
                     </div>
                     <div class="panel panel-default">
-                        <div class="panel-body">
-                            <center><div id="cyReward" role="cylabs" data-use="reward" sid="5eab7e4c363e4cb8bed0efa3604e6b42"></div></center>
-                            <!--<div id="cyEmoji" role="cylabs" data-use="emoji" sid="5eab7e4c363e4cb8bed0efa3604e6b42"></div>-->
-                            <script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
-                            <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysPwLFm1"></script>
-
-
-                            <!--PC版-->
-                            <!--<div id="SOHUCS" sid="5eab7e4c363e4cb8bed0efa3604e6b42"></div>
-                            <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
-                            <script type="text/javascript">
-                            window.changyan.api.config({
-                            appid: 'cysPwLFm1',
-                            conf: 'prod_6c6350e206c502f569b865b4bf121e60'
-                            });
-                            </script>-->
-                            <!-- 多说评论框 start -->
-                            <div class="ds-thread" data-thread-key="testarticle" data-title="我的个人博客之——阿里云空间选择" data-url="http://127.0.0.1:8020/wilco/article_detail.html"></div>
-                            <!-- 多说评论框 end -->
-                            <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-                            <script type="text/javascript">
-                                var duoshuoQuery = {short_name:"wfyvv"};
-                                (function() {
-                                    var ds = document.createElement('script');
-                                    ds.type = 'text/javascript';ds.async = true;
-                                    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-                                    ds.charset = 'UTF-8';
-                                    (document.getElementsByTagName('head')[0]
-                                        || document.getElementsByTagName('body')[0]).appendChild(ds);
-                                })();
-                            </script>
-                            <!-- 多说公共JS代码 end -->
-
+                        <div style="width: 100%;height: 100px;">
+                            <div style="text-align: center;line-height: 100px;">
+                                <button style="width: 134px;height: 49px;line-height:50px;border: none;background-color:#d73925;color:#fff;border-radius: 25px;display: inline-block;font-size: 20px;font-weight: bold;" onclick="getMoney()">打赏</button>
+                            </div>
                         </div>
                     </div>
+                    <script>
+                        function getMoney() {
+
+                        }
+                    </script>
                 </div>
                 <div class="col-lg-3 col-md-3 w_main_right">
 
@@ -94,8 +82,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
