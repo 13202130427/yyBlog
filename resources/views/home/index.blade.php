@@ -158,7 +158,7 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">打钱爱你</h3>
+                            <h3 class="panel-title">打钱爱你哦</h3>
                         </div>
                         <div class="panel-body">
                             <img src="/img/getmoney-wx.jpg" style="height: 300.5px;width: 230.5px;" />
