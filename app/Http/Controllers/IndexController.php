@@ -2,15 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Tools;
 use App\Models\Article;
 use App\Models\Image;
 use App\Models\RotationShow;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class IndexController extends Controller
 {
+    public function __construct(Request $request)
+    {
+    }
+
     public function index() {
+        $is_login = Tools::is_login();
+        if(!$is_login) {
+            //给游客分配uid 生成随机唯一的uid
+            $uid = Tools::get_random_uid(0);
+            Cookie::queue('uid',$uid,60);
+        }
         $show_images = RotationShow::where('is_show','0')->orderBy('sort','DESC')->limit(4)->get();
         foreach ($show_images as $key => $value) {
             $images[$key] = $value->image;
