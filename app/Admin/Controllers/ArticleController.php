@@ -10,6 +10,7 @@ use App\Models\Tag;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\File;
 
@@ -32,6 +33,8 @@ class ArticleController extends AdminController
     {
         $grid = new Grid(new Article());
 
+        $grid->setActionClass(Actions::class);
+
         $grid->column('id', 'ID')->sortable();
         $grid->column('title','标题');
         $grid->column('tag_ids', '标签')->display(function ($tag_ids) {
@@ -52,35 +55,13 @@ class ArticleController extends AdminController
 //        $grid->column('created_at', __('Created at'));
 //        $grid->column('updated_at', __('Updated at'));
 //        $grid->column('deleted_at', __('Deleted at'));
-
+        $grid->actions(function ($actions) {
+            // 去掉编辑
+            $actions->disableEdit();
+            // 去掉查看
+            $actions->disableView();
+        });
         return $grid;
-    }
-
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show(Article::findOrFail($id));
-
-        $show->field('id', __('Id'));
-        $show->field('title', __('Title'));
-        $show->field('tag_ids', __('Tag ids'));
-        $show->field('image_id', __('Image id'));
-        $show->field('content_id', __('Content id'));
-        $show->field('show_content', __('Show content'));
-        $show->field('author', __('Author'));
-        $show->field('read_num', __('Read num'));
-        $show->field('comment_num', __('Comment num'));
-        $show->field('is_top', __('Is top'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
-
-        return $show;
     }
 
     /**
